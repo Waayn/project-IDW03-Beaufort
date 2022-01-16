@@ -1,30 +1,27 @@
 import express from "express";
 import dotenv from "dotenv";
-// import fetch from "node-fetch";
-import fs from "fs";
+import MongoDB from "./database/mongoDB.js";
 
 dotenv.config()
 const PORT = process.env.PORT
+const URI = process.env.DB_HOST
 
 const app = express()
+const mongoDB = new MongoDB(URI)
+mongoDB.connect()
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
 });
 
-app.get('/pokemon/:pokemonName', (req, res) => {
-    const data = fs.readFileSync('./data/pokedex.json', 'utf-8')
-    const pokemonsDatas = JSON.parse(data)
-
-    let pokemonDatas = pokemonsDatas.filter(pokemon => (pokemon.name.french.toString().toLowerCase() === req.params.pokemonName.toString().toLowerCase()
-        || pokemon.name.english.toString().toLowerCase() === req.params.pokemonName.toString().toLowerCase()))
-
-    res.json(pokemonDatas)
+app.get('/pokemons', (req, res) => {
+    mongoDB.getAllPokemons()
+        .then(pokemons => res.json(pokemons))
+        .catch(err => res.text(err))
 })
 
-app.get('/pokemons', (req, res) => {
-    const data = fs.readFileSync('./data/pokedex.json', 'utf-8')
-    const pokemonsDatas = JSON.parse(data)
-
-    res.json(pokemonsDatas)
+app.get('/pokemon/:pokemonId', (req, res) => {
+    mongoDB.getPokemonById(req.params.pokemonId)
+        .then(pokemon => res.json(pokemon))
+        .catch(err => res.text(err))
 })
