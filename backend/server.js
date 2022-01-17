@@ -17,11 +17,11 @@ app.listen(PORT, () => {
 app.get('/pokemons', (req, res) => {
     mongoDB.getAllPokemons()
         .then(pokemons => res.json(pokemons))
-        .catch(err => res.text(err))
+        .catch(error => res.json({ error }))
 })
 
 app.get('/pokemon/:pokemonId', (req, res) => {
     mongoDB.getPokemonById(req.params.pokemonId)
         .then(pokemon => res.json(pokemon))
-        .catch(err => res.text(err))
+        .catch(error => res.json({ error }))
 })
