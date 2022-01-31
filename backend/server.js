@@ -61,7 +61,7 @@ app.get('/pokemons', (req, res) => {
         .catch(error => res.status(500).json(error))
 })
 
-app.get('/pokemon/:pokemonId', (req, res) => {
+app.post('/pokemon/:pokemonId', (req, res) => {
     if (!req.body.id) {
         return res.status(400).json({ message: 'Error. Please enter an id' })
     }

@@ -1,0 +1,9 @@
+.eye-login {
+    font-size: 20px;
+    position: absolute;
+    color: black;
+    right: 2%;
+    top: 0;
+    cursor: pointer;
+    z-index: 10;
+}
