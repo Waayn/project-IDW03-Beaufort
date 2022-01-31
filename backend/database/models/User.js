@@ -13,7 +13,8 @@ export default class User {
             username: String,
             password: String,
             email: String,
-            role: String
+            role: String,
+            capturedPokemons: Array
         })
     }
 
@@ -25,7 +26,8 @@ export default class User {
                 username: user.username,
                 password: hashedPassword,
                 email: user.email,
-                role: 'user'
+                role: 'user',
+                capturedPokemons: []
             })
             try {
                 await newUser.save()
@@ -56,7 +58,26 @@ export default class User {
         return new Promise(async (resolve, reject) => {
             try {
                 const user = await Users.findById(userId)
-                resolve({ username: user.username, email: user.email, role: user.role, id: user._id.toString() })
+                resolve({
+                    username: user.username,
+                    email: user.email,
+                    role: user.role,
+                    id: user._id.toString(),
+                    capturedPokemons: user.capturedPokemons
+                })
+            } catch (err) {
+                reject({ error: "Invalid id or database connection error" })
+            }
+        })
+    }
+
+    async setCapturedPokemons(userId, capturedPokemons) {
+        const Users = mongoose.model('users', this.userSchema)
+        return new Promise(async (resolve, reject) => {
+            try {
+                await Users.findByIdAndUpdate(userId, { capturedPokemons })
+                const datas = await this.getUserById(userId)
+                resolve(datas)
             } catch (err) {
                 reject({ error: "Invalid id or database connection error" })
             }

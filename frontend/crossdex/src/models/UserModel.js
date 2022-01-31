@@ -37,4 +37,16 @@ export default class UserModel {
             }
         })
     }
+
+    setCapturedPokemons(id, capturedPokemons) {
+        return new Promise((resolve, reject) => {
+            try {
+                axios.put('http://localhost:1510/user/capturedPokemons', { id, capturedPokemons })
+                    .then(res => resolve(res))
+                    .catch(err => reject(err))
+            } catch (err) {
+                reject({ error: "Unable to access server" })
+            }
+        })
+    }
 }

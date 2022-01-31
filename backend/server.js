@@ -52,6 +52,15 @@ app.post('/get/user', (req, res) => {
         .catch(error => res.status(500).json(error))
 })
 
+app.put('/user/capturedPokemons', (req, res) => {
+    if (!req.body.id || !req.body.capturedPokemons) {
+        return res.status(400).json({ message: 'Error. Please enter an id and an array of captured pokemons' })
+    }
+    userDB.setCapturedPokemons(req.body.id, req.body.capturedPokemons)
+        .then(result => res.status(200).json(result))
+        .catch(error => res.status(500).json(error))
+})
+
 //------------------------  POKEMON  ------------------------
 
 
