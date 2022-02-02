@@ -45,7 +45,13 @@ export default class User {
                 const user = await Users.findOne({ email: userInfos.email })
                 const resultHash = await compareHash(userInfos.password.toString(), user.password)
                 resultHash === true ?
-                    resolve({ username: user.username, email: user.email, role: user.role, id: user._id.toString() }) :
+                    resolve({
+                        username: user.username,
+                        email: user.email,
+                        role: user.role,
+                        id: user._id.toString(),
+                        capturedPokemons: user.capturedPokemons
+                    }) :
                     reject({ error: "Wrong password" })
             } catch (err) {
                 reject({ error: "Invalid email or database connection error" })

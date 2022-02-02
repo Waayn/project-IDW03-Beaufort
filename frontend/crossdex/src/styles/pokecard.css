@@ -79,15 +79,22 @@
     cursor:pointer;
 }
 
-.pokemon-card:hover {
+.pokemon-card:active {
     width: 175px !important;
     height: 215px !important;
 }
 
+@media (min-width: 768px) { 
+    .pokemon-card:hover {
+        width: 175px !important;
+        height: 215px !important;
+    }
+ }
+
 .pokemon-name {
     font-weight: bold;
     color: white;
-    font-size: 18px;
+    font-size: 27px;
 }
 
 .pokeball-validation{

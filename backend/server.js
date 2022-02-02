@@ -70,11 +70,8 @@ app.get('/pokemons', (req, res) => {
         .catch(error => res.status(500).json(error))
 })
 
-app.post('/pokemon/:pokemonId', (req, res) => {
-    if (!req.body.id) {
-        return res.status(400).json({ message: 'Error. Please enter an id' })
-    }
-    pokemonDB.getPokemonById(req.body.id)
+app.get('/pokemon/:pokemonId', (req, res) => {
+    pokemonDB.getPokemonById(req.params.pokemonId)
         .then(pokemon => res.status(200).json(pokemon))
         .catch(error => res.status(500).json(error))
 })

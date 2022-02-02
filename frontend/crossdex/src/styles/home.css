@@ -1,0 +1,73 @@
+.pokeinput {
+    border-radius: 40px !important;
+    height: 50px !important;
+    padding: 5px 20px 0px 20px !important;
+    border: 5px solid #FFCC00 !important;
+    background: white !important;
+    color: #7e7e7e !important;
+    font-weight: bold !important;
+    width: 50%;
+    font-size: 30px !important;
+}
+
+.pokeinput:focus-visible {
+    outline: none;
+}
+
+.pokeinput::placeholder {
+    color: #7e7e7e !important;
+    opacity: 50% !important;
+}
+
+@media (max-width: 992px) { 
+    .pokeinput {
+        width: 70%;
+    }
+ }
+
+@media (max-width: 768px) { 
+    .pokeinput {
+        width: 90%;
+    }
+ }
+
+@media (max-width: 576px) { 
+    .pokeinput {
+        width: 90%;
+    }
+ }
+
+.btn-pokemodal-cancel, .btn-pokemodal-yes{
+    font-size: 30px;
+    border-radius: 40px !important;
+    height: 50px;
+    font-weight: bold !important;
+    width: 300px;
+    border: none;
+}
+
+.btn-pokemodal-cancel{
+    background-color: #7e7e7e;
+    color: white;
+}
+
+.btn-pokemodal-yes {
+    background-color: #FFCC00;
+    color: white;
+}
+
+.btn-pokemodal-cancel:hover{
+    background-color: #5e5e5e;
+}
+
+.btn-pokemodal-yes:hover {
+    background-color: #cfa809;
+}
+
+.modal-content {
+    padding: 15px !important;
+}
+
+.pokelogout::before {
+    margin-bottom: 6.5px;
+}

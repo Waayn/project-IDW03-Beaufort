@@ -54,41 +54,35 @@ const Register = () => {
         setSeePassword2(!seePassword2)
     }
 
-    return <Container className="mt-5 d-flex align-items-center justify-content-center flex-column">
+    return <Container className="d-flex align-items-center justify-content-center flex-column min-vh-100">
         <NotificationContainer />
-        <h1 className="mb-5">Registration</h1>
-        <Form className="d-flex justify-content-center flex-column mb-5 w-100" style={{ maxWidth: "400px" }} onSubmit={handleSubmit}>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Email</Form.Label>
-                <Form.Control type="email" placeholder="Enter your email address" name="email" value={infos.email} onChange={handleInfos} />
+        <h1 className="mb-4 poketitle">Registration</h1>
+        <Form className="d-flex justify-content-center flex-column mb-4 w-100 pokeform" style={{ maxWidth: "400px" }} onSubmit={handleSubmit}>
+            <Form.Group className="mb-4" controlId="formBasicEmail">
+                <Form.Control className="pokeinput w-100" type="email" placeholder="Enter your email address" name="email" value={infos.email} onChange={handleInfos} />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicText">
-                <Form.Label>Username</Form.Label>
-                <Form.Control type="text" placeholder="Enter your username" name="username" value={infos.username} onChange={handleInfos} />
+            <Form.Group className="mb-4" controlId="formBasicText">
+                <Form.Control className="pokeinput w-100" type="text" placeholder="Enter your username" name="username" value={infos.username} onChange={handleInfos} />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
+            <Form.Group className="mb-4" controlId="formBasicPassword">
                 <div className="position-relative">
-                    <Form.Control type={seePassword ? "text" : "password"} placeholder="Enter your password" name="password" value={infos.password} onChange={handleInfos} />
+                    <Form.Control className="pokeinput w-100" type={seePassword ? "text" : "password"} placeholder="Enter your password" name="password" value={infos.password} onChange={handleInfos} />
                     {seePassword ? <i onClick={handleEye} className="bi bi-eye eye-login"></i> : <i onClick={handleEye} className="bi bi-eye-slash eye-login"></i>}
                 </div>
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword2">
-                <Form.Label>Confirm the password</Form.Label>
+            <Form.Group className="mb-4" controlId="formBasicPassword2">
                 <div className="position-relative">
-                    <Form.Control type={seePassword2 ? "text" : "password"} placeholder="Enter your password" name="password2" value={infos.password2} onChange={handlePassword2} />
+                    <Form.Control className="pokeinput w-100 mb-2" type={seePassword2 ? "text" : "password"} placeholder="Confirm your password" name="password2" value={infos.password2} onChange={handlePassword2} />
                     {seePassword2 ? <i onClick={handleEye2} className="bi bi-eye eye-login"></i> : <i onClick={handleEye2} className="bi bi-eye-slash eye-login"></i>}
                 </div>
             </Form.Group>
-            {error !== "" && <Alert variant="danger" style={{ fontSize: "13px" }} className="w-100 text-center">{error}</Alert>}
-            <Button variant="primary" type="submit">
-                Register
-            </Button>
+            {error !== "" && <Alert variant="danger" style={{ fontSize: "13px" }} className="w-100 text-center mb-2">{error}</Alert>}
+            <Button variant="primary" type="submit" className="poke-fs w-75 mx-auto pokesubmit">Register</Button>
         </Form>
-        <p>Already have an account? <Link to="/login">Log in</Link></p>
+        <p className="poke-fs">Already have an account? <Link className="pokelink" to="/login">Log in</Link></p>
     </Container>
 };
 

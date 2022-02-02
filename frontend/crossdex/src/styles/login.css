@@ -1,9 +1,57 @@
 .eye-login {
     font-size: 20px;
     position: absolute;
-    color: black;
-    right: 2%;
-    top: 0;
+    right: 3%;
+    top: 13%;
     cursor: pointer;
     z-index: 10;
+    color: #7e7e7e;
+}
+
+.poketitle {
+    font-size: 50px !important;
+    color: #7e7e7e !important;
+}
+
+.poke-fs {
+    font-size: 25px !important;;
+}
+
+.pokesubmit {
+    background-color: #7e7e7e !important;
+    border: none !important;
+    border-radius: 40px !important;
+}
+
+.pokesubmit:hover {
+    background-color: #FFCC00 !important;
+    color: #585858 !important;
+}
+
+.pokelink {
+    color: #7e7e7e !important;
+}
+
+.pokelink:hover {
+    color: #FFCC00 !important;
+}
+
+.form-check-input {
+    font-size: 20px !important;
+    margin-right: 10px;
+    border-color: #7e7e7e !important;
+    margin-bottom: 10px;
+}
+
+.form-check-input:checked {
+    background-color: #FFCC00 !important;
+    border: none;
+}
+
+.form-check-input:focus {
+    box-shadow: none !important;
+}
+
+.form-check-input:active {
+    filter: none !important;
 }

@@ -45,30 +45,26 @@ const Login = () => {
         setSeePassword(!seePassword)
     }
 
-    return <Container className="mt-5 d-flex align-items-center justify-content-center flex-column">
-        <h1 className="mb-5">Login</h1>
-        <Form className="d-flex justify-content-center flex-column mb-5 w-100" style={{ maxWidth: "400px" }} onSubmit={handleSubmit}>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Email</Form.Label>
-                <Form.Control type="email" placeholder="Enter your email" name="email" value={infos.email} onChange={handleInfos} />
+    return <Container className="d-flex align-items-center justify-content-center flex-column min-vh-100">
+        <h1 className="mb-4 poketitle">Login</h1>
+        <Form className="d-flex justify-content-center flex-column mb-4 w-100 poke-fs" style={{ maxWidth: "400px" }} onSubmit={handleSubmit}>
+            <Form.Group className="mb-4" controlId="formBasicEmail">
+                <Form.Control className="pokeinput w-100" type="email" placeholder="Enter your email" name="email" value={infos.email} onChange={handleInfos} />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
+            <Form.Group className="mb-4" controlId="formBasicPassword">
                 <div className="position-relative">
-                    <Form.Control type={seePassword ? "text" : "password"} placeholder="Enter your password" name="password" value={infos.password} onChange={handleInfos} />
+                    <Form.Control className="pokeinput w-100" type={seePassword ? "text" : "password"} placeholder="Enter your password" name="password" value={infos.password} onChange={handleInfos} />
                     {seePassword ? <i onClick={handleEye} className="bi bi-eye eye-login"></i> : <i onClick={handleEye} className="bi bi-eye-slash eye-login"></i>}
                 </div>
             </Form.Group>
-            <Form.Group className="mb-3 w-50 mx-auto" controlId="formBasicCheckbox">
-                <Form.Check type="checkbox" label="Remember me" value={checkRemember} onChange={() => setCheckRemember(!checkRemember)} />
+            <Form.Group className="mb-3 w-100 mx-auto" controlId="formBasicCheckbox">
+                <Form.Check className="d-flex justify-content-center align-items-center" type="checkbox" label="Remember me" value={checkRemember} onChange={() => setCheckRemember(!checkRemember)} />
             </Form.Group>
             {error !== "" && <Alert variant="danger" style={{ fontSize: "13px" }} className="w-100 text-center">{error}</Alert>}
-            <Button variant="primary" type="submit">
-                Sign in
-            </Button>
+            <Button variant="primary" type="submit" className="poke-fs w-75 mx-auto pokesubmit">Sign in</Button>
         </Form>
-        <p>You don't have an account ? <Link to="/register">Register</Link></p>
+        <p className="poke-fs">You don't have an account ? <Link className="pokelink" to="/register">Register</Link></p>
     </Container>
 }
 

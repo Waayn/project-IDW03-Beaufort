@@ -11,7 +11,7 @@ const Pagination = ({ onChange, items, itemsPerPage }) => {
     }
 
     return (
-        <div className="d-flex justify-content-center mt-4 w-100">
+        <div className="d-flex justify-content-center mt-5 w-100">
             <ul className="pagination pagination-md" style={{ marginBottom: '2px' }}>
                 <li className={"page-item" + (current === 1 ? ' disabled' : '')}>
                     <button className="page-link" onClick={() => { setCurrent(current - 1); onChange(current - 1) }}>&laquo;</button>
