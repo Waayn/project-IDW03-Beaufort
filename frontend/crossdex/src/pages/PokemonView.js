@@ -13,13 +13,23 @@ const PokemonView = () => {
     const [error, setError] = useState(false)
     const navigate = useNavigate()
     const pokemonModel = new PokemonModel()
+    const [previousThumbnail, setPreviousThumbnail] = useState('')
+    const [nextThumbnail, setNextThumbnail] = useState('')
 
     useEffect(() => {
         if (user.capturedPokemons) pokemonModel.getPokemonById(params.pokemonId)
             .then(res => checkData(res.data[0]))
-            .catch(err => { console.log(err); setError('Something went wrong, try again.') })
+            .catch(err => setError('Something went wrong, try again.'))
         //eslint-disable-next-line
     }, [user.capturedPokemons])
+
+    useEffect(() => {
+        if (Object.keys(pokemon).length !== 0) {
+            if (pokemon.evolution.next) getPokemonThumbnail(pokemon.evolution.next[0][0], "next")
+            if (pokemon.evolution.prev) getPokemonThumbnail(pokemon.evolution.prev[0], "previous")
+        }
+        //eslint-disable-next-line
+    }, [pokemon])
 
     const isCaptured = (id) => {
         return user.capturedPokemons.includes(id)
@@ -30,9 +40,15 @@ const PokemonView = () => {
         else setPokemon(data)
     }
 
-    return <>{error ? <h1>{error}</h1> : <>
+    const getPokemonThumbnail = (id, type) => {
+        pokemonModel.getPokemonById(id)
+            .then(res => {
+                type === "previous" ? setPreviousThumbnail(res.data[0].thumbnail) : setNextThumbnail(res.data[0].thumbnail)
+            })
+    }
+
+    return <>{error ? <h1 className="mt-4 mx-auto">{error}</h1> : <>
         {Object.keys(pokemon).length !== 0 ? <div>
-            {console.log(pokemon)}
             <Row>
                 <Col xs={3} className="d-block d-md-none mt-3">
                     <Link to={'/'} className="pokeback d-flex ms-3 me-2">
@@ -52,18 +68,20 @@ const PokemonView = () => {
             </Row>
             <div className="pokeviewdiv mx-auto">
                 {/* -----------  Presentation ----------- */}
-                <img src={pokemon.thumbnail} alt={'Pokemon'} className="mt-3 mx-auto d-block" />
+                <img src={pokemon.hires} alt={'Pokemon'} className="mt-3 mx-auto d-block" style={{ width: "200px" }} />
                 <p className="m-0 p-0 mt-3 fw-bold" style={{ fontSize: "24px" }}>{pokemon.species}</p>
                 <div className="mt-1 mx-4 mb-3">{pokemon.description}</div>
                 {pokemon.type.map(t => {
                     return <p key={t} className={"m-0 w-50 mx-auto text-white p-0 pokebg-" + t}>{t}</p>
                 })}
-                <Row className="w-75 pb-3 pt-5 mx-auto pokeborder">
+                <h2 className="fw-bold mt-5">Sprite</h2>
+                <img src={pokemon.sprite} alt={'Sprite'} className="mb-5" style={{ width: "80px" }} />
+                <Row className="w-75 pb-3 pt-2 mx-auto pokeborder">
                     <Col xs={6}>Height: {pokemon.profile.height}</Col>
                     <Col xs={6}>Weight: {pokemon.profile.weight}</Col>
                 </Row>
                 <Row className="w-75 pb-3 pt-3 mx-auto pokeborder">
-                    <Col xs={6}><h2 className="fw-bold">Abilities</h2> {pokemon.profile.ability.map(a => <p key={a[0]} className="m-0 p-0">{a[0]}</p>)}</Col>
+                    <Col xs={6}><h2 className="fw-bold">{pokemon.profile.ability.length < 2 ? 'Ability' : 'Abilities'}</h2> {pokemon.profile.ability.map(a => <p key={a[0]} className="m-0 p-0">{a[0]}</p>)}</Col>
                     <Col xs={6}><h2 className="fw-bold">Egg</h2> {pokemon.profile.egg.map(e => <p key={e} className="m-0 p-0">{e}</p>)}</Col>
                 </Row>
 
@@ -86,7 +104,24 @@ const PokemonView = () => {
                         <p className="m-0 p-0">{Object.keys(pokemon.base)[4]}: {Object.values(pokemon.base)[4]}</p>
                         <p className="m-0 p-0">{Object.keys(pokemon.base)[5]}: {Object.values(pokemon.base)[5]}</p>
                     </Col>
+                </Row>
 
+                {/* -----------  Evolutions ----------- */}
+                <Row className="w-75 pb-3 pt-3 mx-auto pokeborder">
+                    <Col xs={6}>
+                        <h2 className="fw-bold">Previous</h2>
+                        {pokemon.evolution.prev ? <>
+                            <img src={previousThumbnail} alt={'Previous evolution'} />
+                            <p className="m-0 p-0 mb-2 mt-1">{pokemon.evolution.prev[1]}</p>
+                        </> : <p className="m-0 p-0">No previous evolution</p>}
+                    </Col>
+                    <Col xs={6}>
+                        <h2 className="fw-bold">Next</h2>
+                        {pokemon.evolution.next ? <>
+                            <img src={nextThumbnail} alt={'Next evolution'} />
+                            <p className="m-0 p-0 mb-2 mt-1">{pokemon.evolution.next[0][1]}</p>
+                        </> : <p className="m-0 p-0">No next evolution</p>}
+                    </Col>
                 </Row>
             </div>
         </div> : <Loader />}

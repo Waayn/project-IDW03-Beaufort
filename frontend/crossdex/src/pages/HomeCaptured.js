@@ -59,7 +59,7 @@ const HomeCaptured = () => {
     })
 
     return <>
-        {error ? <h1>{error}</h1> : <>
+        {error ? <h1 className="mt-4 mx-auto">{error}</h1> : <>
             {pokemons.length !== 0 ?
                 <div>
                     <img src={Logo} alt="Logo Crossdex" style={{ cursor: "pointer" }} onClick={() => navigate('/')} className="mw-100 mx-auto d-block" />
