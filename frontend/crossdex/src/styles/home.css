@@ -2,6 +2,10 @@
     --bs-gutter-x: 0 !important;
 }
 
+.pokecaught:hover {
+    color: #FFCC00 !important;
+}
+
 .pokeslogan {
     font-size: 35px;
     color: #7e7e7e !important;

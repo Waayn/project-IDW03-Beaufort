@@ -6,7 +6,7 @@
     line-height: 30px;
 }
 
-#pokehoverlink:hover, #pokehoverlink2:hover, #pokehoverlink:hover ~ #pokehoverlink2, #pokehoverlink2:hover ~ #pokehoverlink {
+.pokehoverlink:hover {
     color: #ffcb05 !important;
 }
 

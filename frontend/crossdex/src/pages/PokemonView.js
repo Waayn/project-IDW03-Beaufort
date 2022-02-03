@@ -24,7 +24,7 @@ const PokemonView = () => {
     }, [user.capturedPokemons])
 
     useEffect(() => {
-        if (Object.keys(pokemon).length !== 0) {
+        if (Object.keys(pokemon).length !== 0 && pokemon.evolution) {
             if (pokemon.evolution.next) getPokemonThumbnail(pokemon.evolution.next[0][0], "next")
             if (pokemon.evolution.prev) getPokemonThumbnail(pokemon.evolution.prev[0], "previous")
         }
@@ -51,15 +51,15 @@ const PokemonView = () => {
         {Object.keys(pokemon).length !== 0 ? <div>
             <Row>
                 <Col xs={3} className="d-block d-md-none mt-3">
-                    <Link to={'/'} className="pokeback d-flex ms-3 me-2">
-                        <i className="bi bi-chevron-left me-1 pokehoverlink" style={{ fontSize: '15px' }}></i>
-                        <p className="d-block mt-1 pokehoverlink">Home</p>
+                    <Link to={'/'} className="pokeback d-flex ms-3 me-2 pokehoverlink">
+                        <i className="bi bi-chevron-left me-1" style={{ fontSize: '15px' }}></i>
+                        <p className="d-block mt-1">Home</p>
                     </Link>
                 </Col>
                 <Col xs={3} className="d-none d-md-block mt-3">
-                    <Link to={'/'} className="pokeback d-flex ms-3">
-                        <i className="bi bi-chevron-left me-1" id={'pokehoverlink'} style={{ fontSize: '20px' }}></i>
-                        <p className="d-block" id={'pokehoverlink2'} style={{ marginTop: '6px' }}>Home</p>
+                    <Link to={'/'} className="pokeback d-flex ms-3 pokehoverlink w-50">
+                        <i className="bi bi-chevron-left me-1" style={{ fontSize: '20px' }}></i>
+                        <p className="d-block" style={{ marginTop: '6px' }}>Home</p>
                     </Link>
                 </Col>
                 <Col xs={12} md={6} className="">
@@ -77,8 +77,9 @@ const PokemonView = () => {
                 <h2 className="fw-bold mt-5">Sprite</h2>
                 <img src={pokemon.sprite} alt={'Sprite'} className="mb-5" style={{ width: "80px" }} />
                 <Row className="w-75 pb-3 pt-2 mx-auto pokeborder">
-                    <Col xs={6}>Height: {pokemon.profile.height}</Col>
-                    <Col xs={6}>Weight: {pokemon.profile.weight}</Col>
+                    <Col xs={4}>Height: {pokemon.profile.height}</Col>
+                    <Col xs={4}>Weight: {pokemon.profile.weight}</Col>
+                    <Col xs={4}>Gender %(M:F): {pokemon.profile.gender}</Col>
                 </Row>
                 <Row className="w-75 pb-3 pt-3 mx-auto pokeborder">
                     <Col xs={6}><h2 className="fw-bold">{pokemon.profile.ability.length < 2 ? 'Ability' : 'Abilities'}</h2> {pokemon.profile.ability.map(a => <p key={a[0]} className="m-0 p-0">{a[0]}</p>)}</Col>
@@ -110,17 +111,17 @@ const PokemonView = () => {
                 <Row className="w-75 pb-3 pt-3 mx-auto pokeborder">
                     <Col xs={6}>
                         <h2 className="fw-bold">Previous</h2>
-                        {pokemon.evolution.prev ? <>
+                        {pokemon.evolution && previousThumbnail !== '' ? <>
                             <img src={previousThumbnail} alt={'Previous evolution'} />
-                            <p className="m-0 p-0 mb-2 mt-1">{pokemon.evolution.prev[1]}</p>
-                        </> : <p className="m-0 p-0">No previous evolution</p>}
+                            <p className="m-0 p-0 mb-3 mt-1">{pokemon.evolution.prev[1]}</p>
+                        </> : <p className="m-0 p-0 mb-3 mt-1">No previous evolution</p>}
                     </Col>
                     <Col xs={6}>
                         <h2 className="fw-bold">Next</h2>
-                        {pokemon.evolution.next ? <>
+                        {pokemon.evolution && nextThumbnail !== '' ? <>
                             <img src={nextThumbnail} alt={'Next evolution'} />
-                            <p className="m-0 p-0 mb-2 mt-1">{pokemon.evolution.next[0][1]}</p>
-                        </> : <p className="m-0 p-0">No next evolution</p>}
+                            <p className="m-0 p-0 mb-3 mt-1">{pokemon.evolution.next[0][1]}</p>
+                        </> : <p className="m-0 p-0 mb-3 mt-1">No next evolution</p>}
                     </Col>
                 </Row>
             </div>

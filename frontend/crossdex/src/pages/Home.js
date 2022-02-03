@@ -58,7 +58,7 @@ const Home = () => {
                     <img src={Logo} alt="Logo Crossdex" style={{ cursor: "pointer" }} onClick={() => navigate('/')} className="mw-100 mx-auto d-block" />
                     <h1 className="w-100 text-center pokeslogan fw-bold pb-4">The cross-generation pokédex !</h1>
                     <input placeholder="Find a pokemon" type="text" className="mt-4 mb-3 mx-auto d-block pokeinput" value={searchedPokemon} onChange={handleSearchPokemon} />
-                    <p className="text-center pokeslogan w-50 mx-auto" style={{ fontSize: "20px", cursor: "pointer" }} onClick={() => navigate('/captured-pokemons')}>Caught Pokémons : {user.capturedPokemons.length}/{pokemons.length}</p>
+                    <p className="text-center pokecaught pokeslogan w-50 mx-auto" style={{ fontSize: "20px", cursor: "pointer" }} onClick={() => navigate('/captured-pokemons')}>Caught Pokémons : {user.capturedPokemons.length}/{pokemons.length}</p>
                     <Row className="mx-auto d-flex w-100">
                         {filteredPokemons.slice(pagination.start, pagination.end).map(pokemon => {
                             return <PokemonCard pokemon={pokemon} key={pokemon.id} />

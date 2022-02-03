@@ -29,7 +29,7 @@ const Pagination = ({ onChange, items, itemsPerPage, currentPage, setCurrent }) 
                     <button className="page-link" onClick={() => { setCurrent(1); onChange(1) }}>&laquo;</button>
                 </li>
                 {current !== 1 && pagesCount > 3 && current > 3 &&
-                    <li li className="page-item disabled">
+                    <li className="page-item disabled">
                         <button className="page-link">...</button>
                     </li>
                 }
@@ -39,7 +39,7 @@ const Pagination = ({ onChange, items, itemsPerPage, currentPage, setCurrent }) 
                     </li>
                 )}
                 {current !== pagesCount && pagesCount > 3 && pagesCount - 2 > current &&
-                    <li li className="page-item disabled">
+                    <li className="page-item disabled">
                         <button className="page-link">...</button>
                     </li>
                 }
