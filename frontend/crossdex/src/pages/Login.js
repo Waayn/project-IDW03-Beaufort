@@ -23,7 +23,7 @@ const Login = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        if (infos.email !== "" && infos.password !== "")
+        if (infos.email !== "" && infos.password !== "") {
             userModel.login(infos)
                 .then(res => {
                     checkRemember === true ? setCookie('crossdex', res.data.id) : setCookie('crossdex', res.data.id, { expires: new Date(Date.now() + (3600 * 1000 * 25)) })
@@ -31,6 +31,7 @@ const Login = () => {
                     navigate('/')
                 })
                 .catch(err => setError("Wrong email or password"))
+        } else setError("Please fill in the fields")
     }
 
     const handleInfos = ({ target: { name, value } }) => {
@@ -61,7 +62,7 @@ const Login = () => {
             <Form.Group className="mb-3 w-100 mx-auto" controlId="formBasicCheckbox">
                 <Form.Check className="d-flex justify-content-center align-items-center" type="checkbox" label="Remember me" value={checkRemember} onChange={() => setCheckRemember(!checkRemember)} />
             </Form.Group>
-            {error !== "" && <Alert variant="danger" style={{ fontSize: "13px" }} className="w-100 text-center">{error}</Alert>}
+            {error !== "" && <Alert variant="danger" style={{ fontSize: "20px" }} className="w-100 text-center">{error}</Alert>}
             <Button variant="primary" type="submit" className="poke-fs w-75 mx-auto pokesubmit">Sign in</Button>
         </Form>
         <p className="poke-fs">You don't have an account ? <Link className="pokelink" to="/register">Register</Link></p>

@@ -79,11 +79,6 @@
     cursor:pointer;
 }
 
-.pokemon-card:active {
-    width: 175px !important;
-    height: 215px !important;
-}
-
 @media (min-width: 768px) { 
     .pokemon-card:hover {
         width: 175px !important;

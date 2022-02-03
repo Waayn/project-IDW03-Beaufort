@@ -5,6 +5,7 @@ import PokemonCard from './../components/PokemonCard';
 import { Row } from 'react-bootstrap';
 import Loader from '../components/Loader';
 import { useCookies } from 'react-cookie';
+import Logo from '../assets/images/logo-crossdex.png';
 
 const Home = () => {
 
@@ -18,6 +19,7 @@ const Home = () => {
     const [searchedPokemon, setSearchedPokemon] = useState('')
     //eslint-disable-next-line
     const [cookies, setCookie] = useCookies()
+    const [currentPage, setCurrentPage] = useState(1)
 
     useEffect(() => {
         pokemonModel.getAllPokemons()
@@ -35,28 +37,36 @@ const Home = () => {
     }
 
     const handleSearchPokemon = (event) => {
+        setPagination({ start: 0, end: 36 })
+        setCurrentPage(1)
         setSearchedPokemon(event.target.value)
     }
 
 
     const filteredPokemons = pokemons.filter(p => {
         return p.name.english.toLowerCase().includes(searchedPokemon.toLowerCase())
-            || p.name.french.toLowerCase().includes(searchedPokemon.toLowerCase())
     })
 
     return <>
         {error ? <h1>{error}</h1> : <>
             {pokemons.length !== 0 ?
-                <div className="mb-4">
-                    <input placeholder="Find a pokemon" type="text" className="mt-4 mb-4 mx-auto d-block pokeinput" value={searchedPokemon} onChange={handleSearchPokemon} />
+                <div>
+                    <img src={Logo} alt="Logo Crossdex" className="mw-100 mx-auto d-block" />
+                    <h1 className="w-100 text-center pokeslogan fw-bold pb-4">The cross-generation pokedex !</h1>
+                    <input placeholder="Find a pokemon" type="text" className="mt-4 mb-5 mx-auto d-block pokeinput" value={searchedPokemon} onChange={handleSearchPokemon} />
                     <Row className="mx-auto d-flex w-100">
                         {filteredPokemons.slice(pagination.start, pagination.end).map(pokemon => {
                             return <PokemonCard pokemon={pokemon} key={pokemon.id} />
                         })}
+                        {filteredPokemons.length === 0 &&
+                            <h3 className="w-100 text-center pokeslogan fw-bold" style={{ fontSize: "30px" }}>No pokemon match your search</h3>
+                        }
                     </Row>
-                    <Pagination items={filteredPokemons.length} itemsPerPage={36} onChange={changePage} />
+                    {filteredPokemons.length !== 0 &&
+                        <Pagination items={filteredPokemons.length} itemsPerPage={36} onChange={changePage} currentPage={currentPage} setCurrent={setCurrentPage} />
+                    }
                     <div className="w-100">
-                        <button className="btn-pokemodal-cancel mx-auto mb-3 mt-5 pt-1 d-block" onClick={logout}>Logout
+                        <button className="btn-pokemodal-cancel mx-auto mb-5 mt-5 pt-1 d-block" onClick={logout}>Logout
                             <i className="bi bi-box-arrow-right ms-3 pokelogout" style={{ fontSize: "20px" }}></i>
                         </button>
                     </div>

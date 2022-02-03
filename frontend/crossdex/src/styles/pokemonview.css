@@ -1,0 +1,11 @@
+.pokeback {
+    font-size: 30px;
+    color: #7e7e7e !important;
+    text-decoration: none;
+    height: 30px;
+    line-height: 30px;
+}
+
+#pokehoverlink:hover, #pokehoverlink2:hover, #pokehoverlink:hover ~ #pokehoverlink2, #pokehoverlink2:hover ~ #pokehoverlink {
+    color: #ffcb05 !important;
+}

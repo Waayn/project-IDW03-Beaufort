@@ -5,6 +5,7 @@ import Home from "../pages/Home";
 import Redirect from "../components/Redirect";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import PokemonView from "../pages/PokemonView";
 import { useDispatch } from 'react-redux';
 import { setUserInfos } from '../app/store';
 import UserModel from '../models/UserModel';
@@ -31,6 +32,7 @@ const MyRoutes = () => {
             <Route path="*" element={<Redirect path="/login" />} />
         </>}
         {typeof cookies['crossdex'] !== 'undefined' && <>
+            <Route exact path='/pokemon/:pokemonId' element={<PokemonView />} />
             <Route exact path='/' element={<Home />} />
             <Route path="*" element={<Redirect path="/" />} />
         </>}

@@ -28,6 +28,10 @@
     color: #585858 !important;
 }
 
+.pokesubmit:focus {
+    box-shadow: none !important;
+}
+
 .pokelink {
     color: #7e7e7e !important;
 }
@@ -48,7 +52,7 @@
     border: none;
 }
 
-.form-check-input:focus {
+.form-check-input:focus, .pokeinput:focus {
     box-shadow: none !important;
 }
 

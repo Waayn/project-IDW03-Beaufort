@@ -79,7 +79,7 @@ const Register = () => {
                     {seePassword2 ? <i onClick={handleEye2} className="bi bi-eye eye-login"></i> : <i onClick={handleEye2} className="bi bi-eye-slash eye-login"></i>}
                 </div>
             </Form.Group>
-            {error !== "" && <Alert variant="danger" style={{ fontSize: "13px" }} className="w-100 text-center mb-2">{error}</Alert>}
+            {error !== "" && <Alert variant="danger" style={{ fontSize: "20px" }} className="w-100 text-center mb-3">{error}</Alert>}
             <Button variant="primary" type="submit" className="poke-fs w-75 mx-auto pokesubmit">Register</Button>
         </Form>
         <p className="poke-fs">Already have an account? <Link className="pokelink" to="/login">Log in</Link></p>

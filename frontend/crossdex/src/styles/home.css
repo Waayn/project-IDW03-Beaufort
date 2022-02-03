@@ -1,3 +1,12 @@
+.row {
+    --bs-gutter-x: 0 !important;
+}
+
+.pokeslogan {
+    font-size: 35px;
+    color: #7e7e7e !important;
+}
+
 .pokeinput {
     border-radius: 40px !important;
     height: 50px !important;
@@ -70,4 +79,36 @@
 
 .pokelogout::before {
     margin-bottom: 6.5px;
+}
+
+.pagination {
+    font-size: 25px;
+}
+
+.page-item.active .page-link{
+    background-color: #FFCC00 !important;
+    border-color: #FFCC00 !important;
+    color:white !important;
+}
+
+.page-link{
+    color:#7e7e7e !important;
+    font-weight: bold !important;
+    border: none !important;
+    border-radius: 6px;
+}
+
+.page-link:focus{
+    box-shadow:none !important;
+    background-color: white !important;
+}
+
+.page-item:first-child .page-link{
+    border-top-left-radius: 30px !important;
+    border-bottom-left-radius: 30px !important;
+}
+
+.page-item:last-child .page-link{
+    border-top-right-radius: 30px !important;
+    border-bottom-right-radius: 30px !important;
 }
