@@ -9,7 +9,7 @@ import Logo from '../assets/images/logo-crossdex.png';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-const Home = () => {
+const HomeCaptured = () => {
 
     const [pokemons, setPokemons] = useState([])
     const pokemonModel = new PokemonModel()
@@ -26,11 +26,18 @@ const Home = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        pokemonModel.getAllPokemons()
-            .then(res => setPokemons(res.data))
+        if (user.capturedPokemons) pokemonModel.getAllPokemons()
+            .then(res => {
+                const capturedPokemons = res.data.filter(pokemon => isCaptured(pokemon.id))
+                setPokemons(capturedPokemons)
+            })
             .catch(err => setError('Something went wrong, try again.'))
         //eslint-disable-next-line
-    }, [])
+    }, [user.capturedPokemons])
+
+    const isCaptured = (id) => {
+        return user.capturedPokemons.includes(id)
+    }
 
     const logout = () => {
         setCookie('crossdex', '', { expires: new Date(Date.now() - (3600 * 1000 * 25)) })
@@ -57,8 +64,7 @@ const Home = () => {
                 <div>
                     <img src={Logo} alt="Logo Crossdex" style={{ cursor: "pointer" }} onClick={() => navigate('/')} className="mw-100 mx-auto d-block" />
                     <h1 className="w-100 text-center pokeslogan fw-bold pb-4">The cross-generation pokédex !</h1>
-                    <input placeholder="Find a pokemon" type="text" className="mt-4 mb-3 mx-auto d-block pokeinput" value={searchedPokemon} onChange={handleSearchPokemon} />
-                    <p className="text-center pokeslogan" style={{ fontSize: "20px", cursor: "pointer" }} onClick={() => navigate('/captured-pokemons')}>Caught Pokémons : {user.capturedPokemons.length}/{pokemons.length}</p>
+                    <input placeholder="Find a pokemon" type="text" className="mt-4 mb-5 mx-auto d-block pokeinput" value={searchedPokemon} onChange={handleSearchPokemon} />
                     <Row className="mx-auto d-flex w-100">
                         {filteredPokemons.slice(pagination.start, pagination.end).map(pokemon => {
                             return <PokemonCard pokemon={pokemon} key={pokemon.id} />
@@ -81,4 +87,4 @@ const Home = () => {
     </>
 };
 
-export default Home;
+export default HomeCaptured;

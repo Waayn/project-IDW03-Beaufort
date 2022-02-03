@@ -2,6 +2,7 @@ import { useCookies } from 'react-cookie';
 import { useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom';
 import Home from "../pages/Home";
+import HomeCaptured from "../pages/HomeCaptured";
 import Redirect from "../components/Redirect";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
@@ -33,6 +34,7 @@ const MyRoutes = () => {
         </>}
         {typeof cookies['crossdex'] !== 'undefined' && <>
             <Route exact path='/pokemon/:pokemonId' element={<PokemonView />} />
+            <Route exact path='/captured-pokemons' element={<HomeCaptured />} />
             <Route exact path='/' element={<Home />} />
             <Route path="*" element={<Redirect path="/" />} />
         </>}

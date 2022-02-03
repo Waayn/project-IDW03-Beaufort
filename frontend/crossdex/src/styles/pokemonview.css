@@ -9,3 +9,18 @@
 #pokehoverlink:hover, #pokehoverlink2:hover, #pokehoverlink:hover ~ #pokehoverlink2, #pokehoverlink2:hover ~ #pokehoverlink {
     color: #ffcb05 !important;
 }
+
+.pokeviewdiv {
+    font-size: 20px !important;
+    color: #7e7e7e !important;
+    max-width: 1000px;
+    text-align: center !important;
+}
+
+.pokeviewh2 {
+    font-size: 30px;
+}
+
+.pokeborder{
+    border-bottom: 1px solid #7e7e7e55;
+}
