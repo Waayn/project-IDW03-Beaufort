@@ -25,4 +25,16 @@ export default class PokemonModel {
             }
         })
     }
+
+    getPokemonsById(ids) {
+        return new Promise((resolve, reject) => {
+            try {
+                axios.post('http://localhost:1510/pokemons', { ids: [...ids] })
+                    .then(res => resolve(res))
+                    .catch(err => reject(err))
+            } catch (err) {
+                reject({ error: "Unable to access server" })
+            }
+        })
+    }
 }

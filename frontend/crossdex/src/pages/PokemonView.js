@@ -4,6 +4,7 @@ import PokemonModel from '../models/PokemonModel';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import Loader from '../components/Loader';
 import { Col, Row } from 'react-bootstrap';
+import CarouselEvolutions from '../components/CarouselEvolutions';
 
 const PokemonView = () => {
 
@@ -13,8 +14,8 @@ const PokemonView = () => {
     const [error, setError] = useState(false)
     const navigate = useNavigate()
     const pokemonModel = new PokemonModel()
-    const [previousThumbnail, setPreviousThumbnail] = useState('')
-    const [nextThumbnail, setNextThumbnail] = useState('')
+    const [previousInfos, setPreviousInfos] = useState()
+    const [nextInfos, setNextInfos] = useState()
 
     useEffect(() => {
         if (user.capturedPokemons) pokemonModel.getPokemonById(params.pokemonId)
@@ -43,7 +44,9 @@ const PokemonView = () => {
     const getPokemonThumbnail = (id, type) => {
         pokemonModel.getPokemonById(id)
             .then(res => {
-                type === "previous" ? setPreviousThumbnail(res.data[0].thumbnail) : setNextThumbnail(res.data[0].thumbnail)
+                type === "previous" ?
+                    setPreviousInfos({ thumbnail: res.data[0].thumbnail, name: res.data[0].name.english }) :
+                    setNextInfos({ thumbnail: res.data[0].thumbnail, name: res.data[0].name.english })
             })
     }
 
@@ -111,16 +114,25 @@ const PokemonView = () => {
                 <Row className="w-75 pb-3 pt-3 mx-auto pokeborder">
                     <Col xs={6}>
                         <h2 className="fw-bold">Previous</h2>
-                        {pokemon.evolution && previousThumbnail !== '' ? <>
-                            <img src={previousThumbnail} alt={'Previous evolution'} />
-                            <p className="m-0 p-0 mb-3 mt-1">{pokemon.evolution.prev[1]}</p>
+                        {pokemon.evolution ? <>
+                            {pokemon.evolution.prev && previousInfos ? <>
+                                <img src={previousInfos.thumbnail} alt={'Previous evolution'} />
+                                <p className="m-0 p-0 mb-2 mt-3 fw-bold">{previousInfos.name}</p>
+                                <p className="m-0 p-0 mb-3 mt-1">{pokemon.evolution.prev[1]}</p>
+                            </> : <p className="m-0 p-0 mb-3 mt-1">No previous evolution</p>}
                         </> : <p className="m-0 p-0 mb-3 mt-1">No previous evolution</p>}
                     </Col>
                     <Col xs={6}>
                         <h2 className="fw-bold">Next</h2>
-                        {pokemon.evolution && nextThumbnail !== '' ? <>
-                            <img src={nextThumbnail} alt={'Next evolution'} />
-                            <p className="m-0 p-0 mb-3 mt-1">{pokemon.evolution.next[0][1]}</p>
+                        {pokemon.evolution ? <>
+                            {pokemon.evolution.next && nextInfos && pokemon.evolution.next.length > 1 ?
+                                <CarouselEvolutions evolutions={pokemon.evolution.next} /> : <>
+                                    {pokemon.evolution.next && nextInfos ? <>
+                                        <img src={nextInfos.thumbnail} alt={'Next evolution'} />
+                                        <p className="m-0 p-0 mb-2 mt-3 fw-bold">{nextInfos.name}</p>
+                                        <p className="m-0 p-0 mb-3 mt-1">{pokemon.evolution.next[0][1]}</p>
+                                    </> : <p className="m-0 p-0 mb-3 mt-1">No next evolution</p>}
+                                </>}
                         </> : <p className="m-0 p-0 mb-3 mt-1">No next evolution</p>}
                     </Col>
                 </Row>

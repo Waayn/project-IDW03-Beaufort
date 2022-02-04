@@ -27,11 +27,20 @@ app.listen(PORT, () => {
 
 app.post('/create/user', (req, res) => {
     if (!req.body.email || !req.body.password || !req.body.username) {
-        return res.status(400).json({ message: 'Error. Please enter a username, a email and a password' })
+        return res.status(400).json({ message: 'Error. Please enter a username, an email and a password' })
     }
     userDB.createUser({ username: req.body.username, password: req.body.password, email: req.body.email })
         .then(result => res.status(200).json(result))
-        .catch(error => res.status(500).json({ error }))
+        .catch(error => res.status(500).json(error))
+})
+
+app.post('/delete/user', (req, res) => {
+    if (!req.body.email || !req.body.password) {
+        return res.status(400).json({ message: 'Error. Please enter an email and a password' })
+    }
+    userDB.deleteUser({ password: req.body.password, email: req.body.email })
+        .then(result => res.status(200).json(result))
+        .catch(error => res.status(500).json(error))
 })
 
 app.post('/login', (req, res) => {
@@ -52,7 +61,7 @@ app.post('/get/user', (req, res) => {
         .catch(error => res.status(500).json(error))
 })
 
-app.put('/user/capturedPokemons', (req, res) => {
+app.patch('/user/capturedPokemons', (req, res) => {
     if (!req.body.id || !req.body.capturedPokemons) {
         return res.status(400).json({ message: 'Error. Please enter an id and an array of captured pokemons' })
     }
@@ -73,5 +82,14 @@ app.get('/pokemons', (req, res) => {
 app.get('/pokemon/:pokemonId', (req, res) => {
     pokemonDB.getPokemonById(req.params.pokemonId)
         .then(pokemon => res.status(200).json(pokemon))
+        .catch(error => res.status(500).json(error))
+})
+
+app.post('/pokemons', (req, res) => {
+    if (!req.body.ids) {
+        return res.status(400).json({ message: 'Error. Please enter ids' })
+    }
+    pokemonDB.getPokemonsById(req.body.ids)
+        .then(result => res.status(200).json(result))
         .catch(error => res.status(500).json(error))
 })

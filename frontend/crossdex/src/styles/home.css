@@ -50,7 +50,7 @@
     }
  }
 
-.btn-pokemodal-cancel, .btn-pokemodal-yes{
+.btn-pokemodal-cancel, .btn-pokemodal-yes, .btn-pokemodal-delete{
     font-size: 30px;
     border-radius: 40px !important;
     height: 50px;
@@ -64,13 +64,23 @@
     color: white;
 }
 
-.btn-pokemodal-yes {
-    background-color: #FFCC00;
+.btn-pokemodal-cancel:hover{
+    background-color: #5e5e5e;
+}
+
+.btn-pokemodal-delete{
+    background-color: #d10000;
     color: white;
 }
 
-.btn-pokemodal-cancel:hover{
-    background-color: #5e5e5e;
+.btn-pokemodal-delete:hover{
+    background-color: #a10101;
+    color: white;
+}
+
+.btn-pokemodal-yes {
+    background-color: #FFCC00;
+    color: white;
 }
 
 .btn-pokemodal-yes:hover {

@@ -21,19 +21,25 @@ export default class User {
     async createUser(user) {
         const Users = mongoose.model('users', this.userSchema)
         return new Promise(async (resolve, reject) => {
-            let hashedPassword = await hasher(user.password)
-            const newUser = new Users({
-                username: user.username,
-                password: hashedPassword,
-                email: user.email,
-                role: 'user',
-                capturedPokemons: []
-            })
-            try {
-                await newUser.save()
-                resolve({ success: `User ${user.username} created` })
-            } catch (err) {
-                reject(err)
+            let usersEmail = []
+            await Users.find().then(users => users.forEach(user => usersEmail.push(user.email)))
+            if (usersEmail.includes(user.email)) {
+                reject({ error: "This email is already taken" })
+            } else {
+                let hashedPassword = await hasher(user.password)
+                const newUser = new Users({
+                    username: user.username,
+                    password: hashedPassword,
+                    email: user.email,
+                    role: 'user',
+                    capturedPokemons: []
+                })
+                try {
+                    await newUser.save()
+                    resolve({ success: `User ${user.username} created` })
+                } catch (err) {
+                    reject(err)
+                }
             }
         })
     }
@@ -86,6 +92,23 @@ export default class User {
                 resolve(datas)
             } catch (err) {
                 reject({ error: "Invalid id or database connection error" })
+            }
+        })
+    }
+
+    async deleteUser(userInfos) {
+        const Users = mongoose.model('users', this.userSchema)
+        return new Promise(async (resolve, reject) => {
+            try {
+                const user = await Users.findOne({ email: userInfos.email })
+                const resultHash = await compareHash(userInfos.password.toString(), user.password)
+                if (resultHash === true) {
+                    const datas = await Users.deleteOne({ email: userInfos.email })
+                    resolve(datas)
+                } else reject({ error: 'Wrong password' })
+            } catch (err) {
+                console.log(err)
+                reject({ error: "Invalid email or database connection error" })
             }
         })
     }

@@ -46,4 +46,16 @@ export default class Pokemon {
             }
         })
     }
+
+    async getPokemonsById(ids) {
+        const Pokemons = mongoose.model('pokemons', this.pokemonSchema)
+        return new Promise(async (resolve, reject) => {
+            try {
+                const datas = await (await Pokemons.find({ id: { $in: ids } }))
+                resolve(datas)
+            } catch (err) {
+                reject({ error: "Database connection error" })
+            }
+        })
+    }
 }

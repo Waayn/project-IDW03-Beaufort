@@ -8,6 +8,7 @@ import { useCookies } from 'react-cookie';
 import Logo from '../assets/images/logo-crossdex.png';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import DeleteUserModal from '../components/DeleteUserModal';
 
 const Home = () => {
 
@@ -24,6 +25,7 @@ const Home = () => {
     const [currentPage, setCurrentPage] = useState(1)
     const user = useSelector(state => state.user)
     const navigate = useNavigate()
+    const [showDeleteModal, setShowDeleteModal] = useState(false)
 
     useEffect(() => {
         pokemonModel.getAllPokemons()
@@ -45,7 +47,6 @@ const Home = () => {
         setCurrentPage(1)
         setSearchedPokemon(event.target.value)
     }
-
 
     const filteredPokemons = pokemons.filter(p => {
         return p.name.english.toLowerCase().includes(searchedPokemon.toLowerCase())
@@ -71,9 +72,11 @@ const Home = () => {
                         <Pagination items={filteredPokemons.length} itemsPerPage={36} onChange={changePage} currentPage={currentPage} setCurrent={setCurrentPage} />
                     }
                     <div className="w-100">
-                        <button className="btn-pokemodal-cancel mx-auto mb-5 mt-5 pt-1 d-block" onClick={logout}>Logout
+                        <button className="btn-pokemodal-cancel mx-auto mb-2 mt-5 pt-1 d-block" onClick={logout}>Logout
                             <i className="bi bi-box-arrow-right ms-3 pokelogout" style={{ fontSize: "20px" }}></i>
                         </button>
+                        <button className="btn-pokemodal-delete mx-auto mb-5 mt-4 pt-1 d-block" onClick={() => setShowDeleteModal(true)}>Delete account</button>
+                        <DeleteUserModal showModal={showDeleteModal} setShowModal={setShowDeleteModal} />
                     </div>
                 </div>
                 : <Loader />}

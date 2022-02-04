@@ -29,6 +29,7 @@ const Register = () => {
                         NotificationManager.success(`Account ${infos.username} created`, 'Success')
                         setTimeout(() => { navigate('/login') }, 2000)
                     })
+                    .catch(err => setError(err.response.data.error))
             } else setError("Passwords do not match")
         } else setError("Please fill in the fields")
     }
