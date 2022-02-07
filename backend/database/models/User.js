@@ -45,11 +45,16 @@ class User {
     }
 
     async login(userInfos) {
+        console.log("-2")
         const Users = mongoose.model('users', this.userSchema)
+        console.log("-1")
         return new Promise(async (resolve, reject) => {
             try {
+                console.log("0")
                 const user = await Users.findOne({ email: userInfos.email })
+                console.log("1")
                 const resultHash = await compareHash(userInfos.password.toString(), user.password)
+                console.log("2")
                 resultHash === true ?
                     resolve({
                         username: user.username,
@@ -60,7 +65,8 @@ class User {
                     }) :
                     reject({ error: "Wrong password" })
             } catch (err) {
-                reject({ error: "Invalid email or database connection error" })
+                console.log(err)
+                reject(err)
             }
         })
     }
