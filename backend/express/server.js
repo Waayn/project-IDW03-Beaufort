@@ -101,7 +101,7 @@ router.post('/pokemons', (req, res) => {
     }
     pokemonDB.getPokemonsById(req.body.ids)
         .then(result => res.status(200).json(result))
-        .catch(error => res.status(500).json(error))
+        .catch(error => res.status(502).json(error))
 })
 
 module.exports.handler = serverless(app);
