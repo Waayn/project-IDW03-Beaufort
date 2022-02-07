@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+const mongoose = require('mongoose');
 
-export default class Pokemon {
+class Pokemon {
     constructor(uri) {
         this.uri = uri;
     }
@@ -59,3 +59,5 @@ export default class Pokemon {
         })
     }
 }
+
+module.exports = Pokemon

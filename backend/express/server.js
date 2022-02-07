@@ -1,15 +1,18 @@
-import express from "express";
-import dotenv from "dotenv";
-import cors from "cors";
-import Pokemon from "./database/models/Pokemon.js";
-import User from "./database/models/User.js";
+const express = require('express');
+const dotenv = require("dotenv");
+const cors = require("cors");
+const Pokemon = require("../database/models/Pokemon.js");
+const User = require("../database/models/User.js");
+const serverless = require('serverless-http');
 
 dotenv.config()
-const PORT = process.env.PORT
-const URI = process.env.DB_HOST
-const SALT = process.env.SALT
+// const URI = process.env.DB_HOST
+const URI = 'mongodb+srv://Waayn:Ronandu13@cluster0.fayyi.mongodb.net/projectIDW03?retryWrites=true&w=majority'
+// const SALT = process.env.SALT
+const SALT = '8d1ee9f20a10fe5a1e9bf6b47f5aa0e5'
 
 const app = express()
+const router = express.Router();
 const pokemonDB = new Pokemon(URI)
 pokemonDB.connect()
 const userDB = new User(URI, SALT)
@@ -19,13 +22,20 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
 
-app.listen(PORT, () => {
-    console.log(`Listening on port ${PORT}`);
-});
+app.use('/.netlify/functions/server', router);  // path must route to lambda
+app.use('/', (req, res) => res.sendFile(path.join('./index.html')));
+
+// app.listen(PORT, () => {
+//     console.log(`Listening on port ${PORT}`);
+// });
 
 //------------------------  USER  ------------------------
 
-app.post('/create/user', (req, res) => {
+router.get('/', (req, res) => {
+    res.json({ 'hello': 'hi' })
+})
+
+router.post('/create/user', (req, res) => {
     if (!req.body.email || !req.body.password || !req.body.username) {
         return res.status(400).json({ message: 'Error. Please enter a username, an email and a password' })
     }
@@ -34,7 +44,7 @@ app.post('/create/user', (req, res) => {
         .catch(error => res.status(500).json(error))
 })
 
-app.post('/delete/user', (req, res) => {
+router.post('/delete/user', (req, res) => {
     if (!req.body.email || !req.body.password) {
         return res.status(400).json({ message: 'Error. Please enter an email and a password' })
     }
@@ -43,7 +53,7 @@ app.post('/delete/user', (req, res) => {
         .catch(error => res.status(500).json(error))
 })
 
-app.post('/login', (req, res) => {
+router.post('/login', (req, res) => {
     if (!req.body.email || !req.body.password) {
         return res.status(400).json({ message: 'Error. Please enter a username and a password' })
     }
@@ -52,7 +62,7 @@ app.post('/login', (req, res) => {
         .catch(error => res.status(500).json(error))
 })
 
-app.post('/get/user', (req, res) => {
+router.post('/get/user', (req, res) => {
     if (!req.body.id) {
         return res.status(400).json({ message: 'Error. Please enter an id' })
     }
@@ -61,7 +71,7 @@ app.post('/get/user', (req, res) => {
         .catch(error => res.status(500).json(error))
 })
 
-app.patch('/user/capturedPokemons', (req, res) => {
+router.patch('/user/capturedPokemons', (req, res) => {
     if (!req.body.id || !req.body.capturedPokemons) {
         return res.status(400).json({ message: 'Error. Please enter an id and an array of captured pokemons' })
     }
@@ -73,19 +83,19 @@ app.patch('/user/capturedPokemons', (req, res) => {
 //------------------------  POKEMON  ------------------------
 
 
-app.get('/pokemons', (req, res) => {
+router.get('/pokemons', (req, res) => {
     pokemonDB.getAllPokemons()
         .then(pokemons => res.status(200).json(pokemons))
         .catch(error => res.status(500).json(error))
 })
 
-app.get('/pokemon/:pokemonId', (req, res) => {
+router.get('/pokemon/:pokemonId', (req, res) => {
     pokemonDB.getPokemonById(req.params.pokemonId)
         .then(pokemon => res.status(200).json(pokemon))
         .catch(error => res.status(500).json(error))
 })
 
-app.post('/pokemons', (req, res) => {
+router.post('/pokemons', (req, res) => {
     if (!req.body.ids) {
         return res.status(400).json({ message: 'Error. Please enter ids' })
     }
@@ -93,3 +103,5 @@ app.post('/pokemons', (req, res) => {
         .then(result => res.status(200).json(result))
         .catch(error => res.status(500).json(error))
 })
+
+module.exports.handler = serverless(app);

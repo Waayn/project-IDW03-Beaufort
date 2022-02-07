@@ -1,12 +1,12 @@
-import crypto from "crypto";
+const crypto = require("crypto");
 
-export const hasher = async (password) => {
+module.exports = hasher = async (password) => {
     let hash = crypto.createHmac("sha512", process.env.SALT);
     hash.update(password);
     return hash.digest("hex");
 };
 
-export const compareHash = async (password, hash) => {
+module.exports = compareHash = async (password, hash) => {
     const passwordHash = await hasher(password, process.env.SALT);
     return passwordHash === hash
 };
