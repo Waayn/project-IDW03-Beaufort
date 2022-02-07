@@ -44,21 +44,43 @@ class User {
         })
     }
 
+    // async login(userInfos) {
+    //     const Users = mongoose.model('users', this.userSchema)
+    //     return new Promise(async (resolve, reject) => {
+    //         try {
+    //             const user = await Users.findOne({ email: userInfos.email })
+    //             const resultHash = await compareHash(userInfos.password.toString(), user.password)
+    //             resultHash === true ?
+    //                 resolve({
+    //                     username: user.username,
+    //                     email: user.email,
+    //                     role: user.role,
+    //                     id: user._id.toString(),
+    //                     capturedPokemons: user.capturedPokemons
+    //                 }) :
+    //                 reject({ error: "Wrong password" })
+    //         } catch (err) {
+    //             reject({ error: "Invalid email or database connection error" })
+    //         }
+    //     })
+    // }
+
     async login(userInfos) {
         const Users = mongoose.model('users', this.userSchema)
         return new Promise(async (resolve, reject) => {
             try {
-                const user = await Users.findOne({ email: userInfos.email })
-                const resultHash = await compareHash(userInfos.password.toString(), user.password)
-                resultHash === true ?
-                    resolve({
-                        username: user.username,
-                        email: user.email,
-                        role: user.role,
-                        id: user._id.toString(),
-                        capturedPokemons: user.capturedPokemons
-                    }) :
-                    reject({ error: "Wrong password" })
+                await Users.findOne({ email: userInfos.email }).then(user => {
+                    const resultHash = await compareHash(userInfos.password.toString(), user.password)
+                    resultHash === true ?
+                        resolve({
+                            username: user.username,
+                            email: user.email,
+                            role: user.role,
+                            id: user._id.toString(),
+                            capturedPokemons: user.capturedPokemons
+                        }) :
+                        reject({ error: "Wrong password" })
+                })
             } catch (err) {
                 reject({ error: "Invalid email or database connection error" })
             }
