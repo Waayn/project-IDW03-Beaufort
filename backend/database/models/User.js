@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
-const { hasher, compareHash } = require("../Crypto");
+import mongoose from "mongoose";
+import { hasher, compareHash } from "../Crypto";
 
-class User {
+export default class User {
     constructor(uri, salt) {
         this.uri = uri
         this.salt = salt
@@ -119,5 +119,3 @@ class User {
         })
     }
 }
-
-module.exports = User
