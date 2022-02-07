@@ -69,7 +69,7 @@ class User {
         const Users = mongoose.model('users', this.userSchema)
         return new Promise(async (resolve, reject) => {
             try {
-                await Users.findOne({ email: userInfos.email }).then(user => {
+                await Users.findOne({ email: userInfos.email }).then(async user => {
                     const resultHash = await compareHash(userInfos.password.toString(), user.password)
                     resultHash === true ?
                         resolve({
