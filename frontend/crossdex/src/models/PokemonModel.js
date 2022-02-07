@@ -5,7 +5,7 @@ export default class PokemonModel {
     getAllPokemons() {
         return new Promise((resolve, reject) => {
             try {
-                axios.get('http://localhost:5555/pokemons')
+                axios.get('https://flamboyant-bardeen-772028.netlify.app/.netlify/functions/server/pokemons')
                     .then(res => resolve(res))
                     .catch(err => reject(err))
             } catch (err) {
@@ -17,7 +17,7 @@ export default class PokemonModel {
     getPokemonById(id) {
         return new Promise((resolve, reject) => {
             try {
-                axios.get('http://localhost:5555/pokemon/' + id)
+                axios.get('https://flamboyant-bardeen-772028.netlify.app/.netlify/functions/server/pokemon/' + id)
                     .then(res => resolve(res))
                     .catch(err => reject(err))
             } catch (err) {
@@ -29,7 +29,7 @@ export default class PokemonModel {
     getPokemonsById(ids) {
         return new Promise((resolve, reject) => {
             try {
-                axios.post('http://localhost:5555/pokemons', { ids: [...ids] })
+                axios.post('https://flamboyant-bardeen-772028.netlify.app/.netlify/functions/server/pokemons', { ids: [...ids] })
                     .then(res => resolve(res))
                     .catch(err => reject(err))
             } catch (err) {

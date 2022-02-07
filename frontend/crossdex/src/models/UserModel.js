@@ -5,7 +5,7 @@ export default class UserModel {
     login(infos) {
         return new Promise((resolve, reject) => {
             try {
-                axios.post('http://localhost:5555/login', { ...infos })
+                axios.post('https://flamboyant-bardeen-772028.netlify.app/.netlify/functions/server/login', { ...infos })
                     .then(res => resolve(res))
                     .catch(err => reject(err))
             } catch (err) {
@@ -17,7 +17,7 @@ export default class UserModel {
     createUser(infos) {
         return new Promise((resolve, reject) => {
             try {
-                axios.post('http://localhost:5555/create/user', { ...infos })
+                axios.post('https://flamboyant-bardeen-772028.netlify.app/.netlify/functions/server/create/user', { ...infos })
                     .then(res => resolve(res))
                     .catch(err => reject(err))
             } catch (err) {
@@ -29,7 +29,7 @@ export default class UserModel {
     getUserById(id) {
         return new Promise((resolve, reject) => {
             try {
-                axios.post('http://localhost:5555/get/user', { id })
+                axios.post('https://flamboyant-bardeen-772028.netlify.app/.netlify/functions/server/get/user', { id })
                     .then(res => resolve(res))
                     .catch(err => reject(err))
             } catch (err) {
@@ -41,7 +41,7 @@ export default class UserModel {
     setCapturedPokemons(id, capturedPokemons) {
         return new Promise((resolve, reject) => {
             try {
-                axios.patch('http://localhost:5555/user/capturedPokemons', { id, capturedPokemons })
+                axios.patch('https://flamboyant-bardeen-772028.netlify.app/.netlify/functions/server/user/capturedPokemons', { id, capturedPokemons })
                     .then(res => resolve(res))
                     .catch(err => reject(err))
             } catch (err) {
@@ -53,7 +53,7 @@ export default class UserModel {
     deleteUser(infos) {
         return new Promise((resolve, reject) => {
             try {
-                axios.post('http://localhost:5555/delete/user', { ...infos })
+                axios.post('https://flamboyant-bardeen-772028.netlify.app/.netlify/functions/server/delete/user', { ...infos })
                     .then(res => resolve(res))
                     .catch(err => reject(err))
             } catch (err) {

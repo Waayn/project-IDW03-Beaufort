@@ -27,8 +27,7 @@ class Pokemon {
         const Pokemons = mongoose.model('pokemons', this.pokemonSchema)
         return new Promise(async (resolve, reject) => {
             try {
-                const datas = await Pokemons.find().sort({ id: 1 })
-                resolve(datas)
+                await Pokemons.find().sort({ id: 1 }).then(datas => resolve(datas))
             } catch (err) {
                 console.log(err)
                 reject({ error: "Database connection error" })
