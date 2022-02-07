@@ -43,12 +43,7 @@ app.post('/delete/user', (req, res) => {
         .catch(error => res.status(500).json(error))
 })
 
-<<<<<<< HEAD:backend/express/server.js
-router.post('/login', (req, res) => {
-    console.log(req.body)
-=======
 app.post('/login', (req, res) => {
->>>>>>> parent of b27faa6 (netlify prepared):backend/server.js
     if (!req.body.email || !req.body.password) {
         return res.status(400).json({ message: 'Error. Please enter a username and a password' })
     }
