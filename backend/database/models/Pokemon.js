@@ -30,6 +30,7 @@ class Pokemon {
                 const datas = await Pokemons.find().sort({ id: 1 })
                 resolve(datas)
             } catch (err) {
+                console.log(err)
                 reject({ error: "Database connection error" })
             }
         })
@@ -42,6 +43,7 @@ class Pokemon {
                 const datas = await Pokemons.find({ id: parseInt(pokemonId) })
                 resolve(datas)
             } catch (err) {
+                console.log(err)
                 reject({ error: "Database connection error" })
             }
         })
@@ -51,7 +53,7 @@ class Pokemon {
         const Pokemons = mongoose.model('pokemons', this.pokemonSchema)
         return new Promise(async (resolve, reject) => {
             try {
-                const datas = await (await Pokemons.find({ id: { $in: ids } }))
+                const datas = await Pokemons.find({ id: { $in: ids } })
                 resolve(datas)
             } catch (err) {
                 reject({ error: "Database connection error" })
