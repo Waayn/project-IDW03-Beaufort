@@ -1,9 +1,12 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "Backend for Crossdex app",
   "main": "server.js",
   "type": "module",
+  "engines": {
+    "node": "16.13.1"
+  },
   "scripts": {
     "start": "nodemon --experimental-modules --es-module-specifier-resolution=node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
